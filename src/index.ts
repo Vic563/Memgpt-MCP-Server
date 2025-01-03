@@ -439,7 +439,13 @@ class LettaMemGPTServer {
           break;
 
         case 'anthropic':
-          const anthropicModels = ['claude-2', 'claude-instant'];
+          const anthropicModels = [
+            'claude-3-haiku',
+            'claude-3-sonnet',
+            'claude-3-opus',
+            'claude-3.5-haiku',
+            'claude-3.5-sonnet'
+          ];
           if (!anthropicModels.includes(args.model)) {
             throw new Error(`Invalid Anthropic model. Available models: ${anthropicModels.join(', ')}`);
           }
