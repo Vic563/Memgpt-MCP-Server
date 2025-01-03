@@ -1,29 +1,29 @@
-# Letta(MemGPT) MCP Server
+# MemGPT MCP Server
 
-LLM Memory
-
-This is a TypeScript-based MCP server that implements a simple notes system. It demonstrates core MCP concepts by providing:
-
-- Resources representing text notes with URIs and metadata
-- Tools for creating new notes
-- Prompts for generating summaries of notes
+A TypeScript-based MCP server that implements a memory system for LLMs. It provides tools for chatting with different LLM providers while maintaining conversation history.
 
 ## Features
 
-### Resources
-- List and access notes via `note://` URIs
-- Each note has a title, content and metadata
-- Plain text mime type for simple content access
-
 ### Tools
-- `create_note` - Create new text notes
-  - Takes title and content as required parameters
-  - Stores note in server state
+- `chat` - Send a message to the current LLM provider
+  - Takes a message parameter
+  - Supports multiple providers (OpenAI, Anthropic, OpenRouter, Ollama)
 
-### Prompts
-- `summarize_notes` - Generate a summary of all stored notes
-  - Includes all note contents as embedded resources
-  - Returns structured prompt for LLM summarization
+- `get_memory` - Retrieve conversation history
+  - Optional `limit` parameter to specify number of memories to retrieve
+  - Pass `limit: null` for unlimited memory retrieval
+  - Returns memories in chronological order with timestamps
+
+- `clear_memory` - Clear conversation history
+  - Removes all stored memories
+
+- `use_provider` - Switch between different LLM providers
+  - Supports OpenAI, Anthropic, OpenRouter, and Ollama
+  - Persists provider selection
+
+- `use_model` - Switch to a different model for the current provider
+  - Supports provider-specific models (e.g., GPT-4, Claude-2, etc.)
+  - Persists model selection
 
 ## Development
 
@@ -52,19 +52,37 @@ On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 ```json
 {
   "mcpServers": {
-    "Letta(MemGPT)": {
-      "command": "/path/to/Letta(MemGPT)/build/index.js"
+    "letta-memgpt": {
+      "command": "/path/to/memgpt-server/build/index.js",
+      "env": {
+        "OPENAI_API_KEY": "your-openai-key",
+        "ANTHROPIC_API_KEY": "your-anthropic-key",
+        "OPENROUTER_API_KEY": "your-openrouter-key"
+      }
     }
   }
 }
 ```
 
+### Environment Variables
+- `OPENAI_API_KEY` - Your OpenAI API key
+- `ANTHROPIC_API_KEY` - Your Anthropic API key
+- `OPENROUTER_API_KEY` - Your OpenRouter API key
+
 ### Debugging
 
-Since MCP servers communicate over stdio, debugging can be challenging. We recommend using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector), which is available as a package script:
+Since MCP servers communicate over stdio, debugging can be challenging. We recommend using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector):
 
 ```bash
 npm run inspector
 ```
 
 The Inspector will provide a URL to access debugging tools in your browser.
+
+## Recent Updates
+
+### Unlimited Memory Retrieval
+- Added support for retrieving unlimited conversation history
+- Use `{ "limit": null }` with the `get_memory` tool to retrieve all stored memories
+- Use `{ "limit": n }` to retrieve the n most recent memories
+- Default limit is 10 if not specified
