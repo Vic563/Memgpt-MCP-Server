@@ -31,10 +31,6 @@ A TypeScript-based MCP server that implements a memory system for LLMs. It provi
       - Claude 3.5 Series:
         - `claude-3.5-haiku`: Enhanced speed and cost-effectiveness
         - `claude-3.5-sonnet`: Superior performance with computer interaction capabilities
-      - All Claude models feature:
-        - Multimodal capabilities (text and image processing)
-        - Large context windows (200,000 tokens, up to 1M for select cases)
-        - Advanced reasoning and coding capabilities
     - OpenAI: 'gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo'
     - OpenRouter: Any model in 'provider/model' format (e.g., 'openai/gpt-4', 'anthropic/claude-2')
     - Ollama: Any locally available model (e.g., 'llama2', 'codellama')
@@ -100,9 +96,6 @@ The Inspector will provide a URL to access debugging tools in your browser.
 - Added support for latest Claude models:
   - Claude 3 Series (Haiku, Sonnet, Opus)
   - Claude 3.5 Series (Haiku, Sonnet)
-- All models feature 200,000 token context windows
-- Support for multimodal capabilities
-- Computer interaction features in Claude 3.5 Sonnet
 
 ### Unlimited Memory Retrieval
 - Added support for retrieving unlimited conversation history
